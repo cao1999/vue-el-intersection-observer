@@ -46,9 +46,6 @@
     "*.{js,ts,vue,md,json}": [
       "prettier --write",
       "git add"
-    ],
-    "src/**/*.{js,ts,vue}": [
-      "eslint"
     ]
   }
 }
