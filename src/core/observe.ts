@@ -1,20 +1,17 @@
-interface IntersectionOptions {
-  readonly root?: Element
-  readonly rootMargin?: string
-  readonly threshold?: number
-}
+import {
+  IntersectionCallback,
+  IntersectionOptions,
+  ObserverMapItem,
+  ObserveOptions,
+} from "./interface"
 
-interface IntersectionCallback {
-  (inView: boolean): void
-}
+// 创建一个map用来存储每一个observer和相关信息
+const ObserverMap = new Map()
 
-interface ObserveOptions {
-  $target: Element
-  onChange: IntersectionCallback
-  root?: Element
-  rootMargin?: string
-  threshold?: number
-}
+// id map，节点当做key，value是节点的id
+const NodeIdMap = new Map()
+
+let nodeId = 1
 
 /**
  * 创建IntersectionObserver实例
@@ -53,12 +50,29 @@ export function createObserver(
 export function observe(options: ObserveOptions): void {
   const { $target, threshold, root, rootMargin, onChange } = options
 
+  // 判断当前节点是否已经被监听了
+  if (isObserved($target)) {
+    return
+  }
+
+  // 获取节点的id
+  const id = getNodeId($target)
+
   // 创建实例
   const observer = createObserver(onChange, {
     root,
     rootMargin,
     threshold,
   })
+
+  const observerInfo: ObserverMapItem = {
+    id,
+    observer,
+    $target,
+  }
+
+  // 存储节点相关信息到map中
+  ObserverMap.set(id, observerInfo)
 
   // 开始监听
   observer.observe($target)
@@ -69,5 +83,33 @@ export function observe(options: ObserveOptions): void {
  * @param $target 要移除监听的元素
  */
 export function unObserve($target: Element): void {
-  console.log(123)
+  const id = NodeIdMap.get($target)
+
+  if (!id) {
+    return
+  }
+
+  const { observer } = ObserverMap.get(id)
+
+  observer.unobserve($target)
+}
+
+/**
+ * 判断目标元素是否已经被observe了
+ * @param $target
+ */
+function isObserved($target: Element): boolean {
+  return NodeIdMap.has($target)
+}
+
+/**
+ * 获取节点的id
+ * @param $el
+ */
+function getNodeId($el: Element): number {
+  const id = nodeId
+  // 存到map中
+  NodeIdMap.set($el, id)
+  nodeId++
+  return id
 }

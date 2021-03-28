@@ -1,12 +1,18 @@
 {
   "name": "vue-el-intersection-observer",
   "version": "0.1.0",
-  "private": true,
+  "author": "Cao ss",
+  "main": "./dist/vue-el-intersection-observer.common.js",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "demo": "vue-cli-service serve ./example/index.ts",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "build:npm": "vue-cli-service build --target lib --name vue-el-intersection-observer ./src/main.ts"
   },
   "dependencies": {
     "vue": "^2.6.11",
@@ -46,6 +52,7 @@
     "*.{js,ts,vue,md,json}": [
       "prettier --write",
       "git add"
-    ]
+    ],
+    "src/**/*.{js,ts,vue}": "eslint"
   }
 }

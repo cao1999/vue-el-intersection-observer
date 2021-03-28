@@ -7,6 +7,7 @@ module.exports = {
     "plugin:vue/essential",
     "@vue/standard",
     "@vue/typescript/recommended",
+    "prettier",
   ],
   parserOptions: {
     ecmaVersion: 2020,
@@ -15,7 +16,8 @@ module.exports = {
     "no-console": process.env.NODE_ENV === "production" ? "warn" : "off",
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     indent: 0,
-    "no-empty-function": 0,
+    "@typescript-eslint/no-empty-function": 0,
+    "lines-between-class-members": 0,
   },
   overrides: [
     {
