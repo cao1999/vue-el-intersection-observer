@@ -5,11 +5,11 @@ import {
   ObserveOptions,
 } from "./interface"
 
-// 创建一个map用来存储每一个observer和相关信息
-const ObserverMap = new Map()
-
 // id map，节点当做key，value是节点的id
 const NodeIdMap = new Map()
+
+// 创建一个map用来存储每一个observer和相关信息
+const ObserverMap = new Map()
 
 let nodeId = 1
 
